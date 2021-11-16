@@ -16,6 +16,6 @@ var n,t=arguments[3],r=require("buffer").Buffer;(function(){var r,e=200,u="Unsup
 },{"buffer":"dskh"}],"krre":[function(require,module,exports) {
 
 },{}],"Focm":[function(require,module,exports) {
-"use strict";var e=require("lodash");require("./css/styles.css");const o=300,t={searchBox:document.querySelector("#search-box"),countryList:document.querySelector(".country-list"),countryInfo:document.querySelector(".country-info")},c=fetch("https://restcountries.com/v3.1/all").then(e=>e.json()).then(e=>{console.log(e)});console.log(c);
+"use strict";var e=require("lodash");require("./css/styles.css");const n=300,t={searchBox:document.querySelector("#search-box"),countryList:document.querySelector(".country-list"),countryInfo:document.querySelector(".country-info")};function o(e){r(e.target.value).then(e=>c(e)).catch(e=>console.log(e))}function r(e){return fetch(`https://restcountries.com/v3.1/name/${e}?fields=name,capital,population,flags,languages`).then(e=>{if(!e.ok)throw new Error(e.statusText);return e.json()})}function c(e){return e.map(({name:e,flags:n})=>`<li class="gallery__item">\n\n <img class="country-img" src="${n.svg}"\n   alt=""\n /> <h2>${e.official}</h2>\n\n\n</li>`).join("")}t.searchBox.addEventListener("input",(0,e.debounce)(o,300)),console.log();
 },{"lodash":"B1iE","./css/styles.css":"krre"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-10/src.324bd4ae.js.map
+//# sourceMappingURL=/goit-js-hw-10/src.d045ec3c.js.map
