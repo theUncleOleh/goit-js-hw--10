@@ -15,9 +15,9 @@ refs.searchBox.addEventListener('input', debounce((handleCountryInput),DEBOUNCE_
 function handleCountryInput(evt) {
     const countryName = evt.target.value;
 fetchCountries(countryName)
-        .then(countries => renderCountry (countries) )
+        .then(countries => renderCountry(countries) )
         .catch(error => console.log(error))
-    
+        
     };
 
 function fetchCountries (countryName) {
@@ -30,19 +30,19 @@ function fetchCountries (countryName) {
     })
 }
 function renderCountry(countries) {
- return countries.map(({name,flags}) => {
-     return `<li class="gallery__item">
+ const markup = countries.map((country) => {
+     return `<li class="country-item">
 
- <img class="country-img" src="${flags.svg}"
-   alt=""
- /> <h2>${name.official}</h2>
+ <div class="country-part"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/> 
+ <h2 class="country-name"><b>${country.name.official}</b></h2></div>
+  <p><b>Capital</b> : ${country.capital}</p>
+  <p><b>Population</b> : ${country.population}</p>
+  <p><b>Languages</b> : ${Object.values(country.languages)}</p>
+ </li>`;}).join('')
 
-
-</li>`;}).join('')
-
-
+refs.countryList.innerHTML = markup;
 } 
-console.log();
+
 
 
   
