@@ -1,49 +1,43 @@
 import { debounce } from 'lodash';
 import Notiflix from 'notiflix';
 import './css/styles.css';
+import getRefs from './getRefs';
+import {fetchCountries }  from './fetchCountries';
+
+
 
 
 
 const DEBOUNCE_DELAY = 300;
+const refs = getRefs();
 
-const refs = {
-    searchBox : document.querySelector("#search-box"),
-    countryList : document.querySelector(".country-list"),
-    countryInfo : document.querySelector(".country-info"),
-};
+
 
 refs.searchBox.addEventListener('input', debounce((handleCountryInput),DEBOUNCE_DELAY))
 
 function handleCountryInput(evt) {
     const countryName = evt.target.value;
-   
-fetchCountries(countryName)
+   let formattedCountryName = countryName.trim();
+   if(!formattedCountryName){
+    refs.countryList.innerHTML = "";
+    } {
+        fetchCountries(formattedCountryName)
         .then(countries => { 
             if(countries.length > 10){
                 Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
             } else if(countries.length >= 2 && countries.length <= 10){
-                renderCountries (countries)
+                renderCountries  (countries)
             } else{
-                renderCountry(countries)
-            }
+                    renderCountry(countries) 
+                }
+
+               
         })
         .catch(error => Notiflix.Notify.failure("Oops, there is no country with that name"))
-        .finally(() => {
-            // refs.countryList.innerHTML = ""
-        })
-        
+       
     };
+    }
 
-function fetchCountries (countryName) {
-    
-  return  fetch(`https://restcountries.com/v3.1/name/${countryName}?fields=name,capital,population,flags,languages`)
-    .then( (response) => {
-        if(!response.ok){
-            throw new Error(response.statusText);
-        }
-    return response.json();
-    })
-}
 function renderCountry(countries) {
  const markup = countries.map((country) => {
      return `<li class="country-item">
@@ -68,7 +62,8 @@ const fewCountries = countries.map((country) => {
 }).join('')
 refs.countryList.innerHTML = fewCountries;
 }
- 
+
+
 
 
 
